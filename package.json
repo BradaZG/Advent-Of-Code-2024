@@ -1,0 +1,27 @@
+{
+  "name": "aoc-2024",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Solutions for AoC 2024 with TypeScript",
+  "author": "Domagoj Marusic",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch ./index.ts",
+    "solve": "bun run ./index.ts"
+  },
+  "keywords": [
+    "AOC",
+    "Advent",
+    "Code",
+    "2024"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.17.9",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11"
+  },
+  "dependencies": {
+    "bun-types": "latest",
+    "commander": "^12.1.0"
+  }
+}
