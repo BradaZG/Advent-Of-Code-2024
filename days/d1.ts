@@ -2,7 +2,6 @@ import * as fs from "fs"
 
 const input = "./inputs/d1.txt"
 const inputTest1 = "./inputs/d1-t1.txt"
-const inputTest2 = "./inputs/d1-t2.txt"
 
 type Data = number[][]
 
