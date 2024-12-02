@@ -21,7 +21,7 @@ const reports = parseInput(input)
 
 // Part1
 
-const getSafeReports = (reports: Data): number => {
+const getSafeReports1 = (reports: Data): number => {
   let safeCount = 0
 
   reports.forEach((report) => {
@@ -45,21 +45,50 @@ const getSafeReports = (reports: Data): number => {
   return safeCount
 }
 
-// const differenceSum = getDifferencesArr(leftArray, rightArray).reduce((a, b) => a + b, 0)
-
 // Part2
 
-// const getSameValuesProductArr = (leftArr: number[], rightArr: number[]): number[] =>
-//   leftArr.map((leftValue) => {
-//     return rightArr.filter((val) => val === leftValue).length * leftValue
-//   })
+const getSafeReports2 = (reports: Data): number => {
+  let safeCount = 0
 
-// const productSum = getSameValuesProductArr(leftArray, rightArray).reduce((a, b) => a + b, 0)
+  const isValid = (report: number[]): boolean => {
+    let isIncreasing = true
+    let isDecreasing = true
+
+    for (let i = 1; i < report.length; i++) {
+      const diff = report[i] - report[i - 1]
+
+      if (Math.abs(diff) < 1 || Math.abs(diff) > 3) return false
+
+      if (diff < 0) isIncreasing = false
+      if (diff > 0) isDecreasing = false
+    }
+
+    return isIncreasing || isDecreasing
+  }
+
+  reports.forEach((report) => {
+    if (isValid(report)) {
+      safeCount++
+      return
+    }
+
+    // if report isn't valid remove one level at a time
+    for (let i = 0; i < report.length; i++) {
+      const modifiedReport = report.slice(0, i).concat(report.slice(i + 1))
+      if (isValid(modifiedReport)) {
+        safeCount++
+        return
+      }
+    }
+  })
+
+  return safeCount
+}
 
 export function runPart1() {
-  console.log(getSafeReports(reports))
+  console.log(getSafeReports1(reports))
 }
 
 export function runPart2() {
-  console.log(reports)
+  console.log(getSafeReports2(reports))
 }
