@@ -2,29 +2,36 @@ import * as fs from "fs"
 
 const input = "./inputs/d3.txt"
 const inputTest1 = "./inputs/d3-t1.txt"
+const inputTest2 = "./inputs/d3-t2.txt"
 
-function parseInput(path: string): RegExpMatchArray {
-  const lines = fs.readFileSync(path, "utf-8").trimEnd()
-  const pattern = /mul\(\d+,\d+\)/g
+const pattern = /mul\(\d+,\d+\)/g
 
-  return lines.match(pattern)
+function parseInput(path: string): string {
+  return fs.readFileSync(path, "utf-8").trimEnd().replace(/\r?\n/g, "")
 }
 
-const matches = parseInput(input)
+const matches1 = parseInput(input).match(pattern)
 
-// Part1
+const matches2 = parseInput(input)
+  // Remove all "don't()" to "do()" sequences
+  .replace(/don't\(\).*?do\(\)/g, "")
+  // Remove any unmatched "don't()" left
+  .replace(/don't\(\)[^]*$/, "")
+  .match(pattern)
 
-const numberPairs = matches.map((match) => {
-  const numbers = match.match(/\d+/g)
-  return numbers ? numbers.map(Number) : []
-})
-
-const totalSum = numberPairs.map((pair) => pair.reduce((a, b) => a * b, 1)).reduce((sum, product) => sum + product, 0)
+const numberPairsProduktSum = (matches: RegExpMatchArray) =>
+  matches
+    .map((match) => {
+      const numbers = match.match(/\d+/g)
+      return numbers ? numbers.map(Number) : []
+    })
+    .map((pair) => pair.reduce((a, b) => a * b, 1))
+    .reduce((sum, product) => sum + product, 0)
 
 export function runPart1() {
-  console.log(totalSum)
+  console.log(numberPairsProduktSum(matches1))
 }
 
 export function runPart2() {
-  console.log(matches)
+  console.log(numberPairsProduktSum(matches2))
 }
