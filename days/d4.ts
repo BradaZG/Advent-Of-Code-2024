@@ -2,7 +2,6 @@ import * as fs from "fs"
 
 const input = "./inputs/d4.txt"
 const inputTest1 = "./inputs/d4-t1.txt"
-const inputTest2 = "./inputs/d4-t2.txt"
 
 function parseInput(path: string): string[][] {
   return fs
@@ -28,14 +27,12 @@ const directions: Direction[] = [
 
 type Direction = [number, number]
 
-// Function to check if the word exists starting from (row, col)
 function isWordPresent(row: number, col: number, direction: Direction): boolean {
   const [deltaRow, deltaCol] = direction
   for (let i = 0; i < word.length; i++) {
     const newRow = row + deltaRow * i
     const newCol = col + deltaCol * i
 
-    // Check boundaries and character match
     if (
       newRow < 0 ||
       newRow >= grid.length ||
